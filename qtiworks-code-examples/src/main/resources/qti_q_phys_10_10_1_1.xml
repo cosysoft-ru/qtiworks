@@ -1,0 +1,45 @@
+<assessmentItem
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+        xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd"
+        identifier="q_phys_10_10_1"
+        title="Решите задачу и впишите правильный ответ"
+        data-type="quiz"
+>
+
+
+    <responseDeclaration identifier="RESPONSE0" cardinality="single" baseType="string">
+        <correctResponse>
+
+            <value>0,3</value>
+
+        </correctResponse>
+    </responseDeclaration>
+
+
+
+    <itemBody>
+
+        <div class="question-section" data-type="text-entries">
+            <div class="question-text">
+                <div data-sound="">
+                    <p>Впишите ответ.</p>
+
+
+                </div>
+            </div>
+
+
+
+
+            <blockquote>
+
+                <p>При помощи динамометра ученик равномерно перемещал деревянный брусок массой 300 г по горизонтально расположенной доске. Если динамометр показывал 0,9 Н, то коэффициент трения был равен
+                    <textEntryInteraction responseIdentifier="RESPONSE0" expectedLength="5" />
+                    .</p>
+            </blockquote>
+
+        </div>
+
+    </itemBody>
+</assessmentItem>

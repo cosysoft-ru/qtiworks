@@ -33,9 +33,25 @@
  */
 package uk.ac.ed.ph.qtiworks.examples;
 
+import com.google.common.collect.Lists;
 import uk.ac.ed.ph.jqtiplus.JqtiExtensionManager;
+import uk.ac.ed.ph.jqtiplus.attribute.value.StringAttribute;
 import uk.ac.ed.ph.jqtiplus.internal.util.ObjectDumper;
+import uk.ac.ed.ph.jqtiplus.node.content.ItemBody;
+import uk.ac.ed.ph.jqtiplus.node.content.basic.Block;
+import uk.ac.ed.ph.jqtiplus.node.content.basic.TextRun;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.presentation.B;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.table.Table;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.table.Tbody;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.table.Td;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.table.Tr;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.text.Blockquote;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.text.Div;
+import uk.ac.ed.ph.jqtiplus.node.content.xhtml.text.P;
 import uk.ac.ed.ph.jqtiplus.node.item.AssessmentItem;
+import uk.ac.ed.ph.jqtiplus.node.item.interaction.GapMatchInteraction;
+import uk.ac.ed.ph.jqtiplus.node.item.interaction.choice.GapText;
+import uk.ac.ed.ph.jqtiplus.node.item.interaction.content.Gap;
 import uk.ac.ed.ph.jqtiplus.node.outcome.declaration.OutcomeDeclaration;
 import uk.ac.ed.ph.jqtiplus.node.shared.FieldValue;
 import uk.ac.ed.ph.jqtiplus.node.shared.declaration.DefaultValue;
@@ -51,6 +67,8 @@ import uk.ac.ed.ph.jqtiplus.value.BaseType;
 import uk.ac.ed.ph.jqtiplus.value.Cardinality;
 import uk.ac.ed.ph.jqtiplus.value.FloatValue;
 import uk.ac.ed.ph.jqtiplus.xmlutils.locators.NullResourceLocator;
+
+import java.util.List;
 
 /**
  * This example builds a simple JQTI+ {@link AssessmentItem} programmatically,
@@ -77,6 +95,41 @@ public final class DynamicItemExample {
         assessmentItem.setAdaptive(Boolean.FALSE);
         assessmentItem.setTimeDependent(Boolean.FALSE);
 
+        final ItemBody itemBody = new ItemBody(assessmentItem);
+        final List<Block> blocks = itemBody.getBlocks();
+        final Div divQS = new Div(itemBody);
+        divQS.setClassAttr(Lists.newArrayList("question-section"));
+        final StringAttribute dataTypeAttribute = new StringAttribute(divQS, "data-type", "gap-match-table", true);
+        dataTypeAttribute.setValue("gap-match-table");
+        divQS.getAttributes().add(dataTypeAttribute);
+        blocks.add(divQS);
+        assessmentItem.setItemBody(itemBody);
+        final Div divQT = new Div(divQS);
+        divQT.setClassAttr(Lists.newArrayList("question-text"));
+        divQS.getFlows().add(divQT);
+        final P divQt_p = new P(divQT);
+        final B boldText = new B(divQt_p);
+        boldText.getInlines().add(new TextRun(divQt_p, "bold"));
+        divQt_p.getInlines().add(boldText);
+        divQt_p.getInlines().add(new TextRun(divQt_p, "question text"));
+        divQT.getFlows().add(divQt_p);
+        final GapMatchInteraction gapInter = new GapMatchInteraction(divQS);
+        divQS.getFlows().add(gapInter);
+        final GapText gapText = new GapText(gapInter);
+        gapInter.getGapChoices().add(gapText);
+        gapInter.getBlockStatics().add(new Blockquote(gapInter));
+        final Td td = new Td(divQS);
+        final Table table = new Table(gapInter);
+        gapInter.getBlockStatics().add(table);
+        final Tbody tbody = new Tbody(table);
+        table.getTbodys().add(tbody);
+        final Tr tr = new Tr(tbody);
+        tbody.getTrs().add(tr);
+        tr.getTableCells().add(td);
+        final Gap gap = new Gap(td);
+        td.getChildren().add(gap);
+
+
         /* Declare a SCORE outcome variable */
         final OutcomeDeclaration score = new OutcomeDeclaration(assessmentItem);
         score.setIdentifier(Identifier.assumedLegal("SCORE"));
@@ -87,18 +140,18 @@ public final class DynamicItemExample {
         score.setDefaultValue(defaultValue);
         assessmentItem.getOutcomeDeclarations().add(score);
 
-        /* Validate */
+//        /* Validate */
         final JqtiExtensionManager jqtiExtensionManager = new JqtiExtensionManager();
-        final QtiXmlReader qtiXmlReader = new QtiXmlReader(jqtiExtensionManager);
-        final QtiObjectReader qtiObjectReader = qtiXmlReader.createQtiObjectReader(NullResourceLocator.getInstance(), false);
-        final AssessmentObjectResolver resolver = new AssessmentObjectResolver(qtiObjectReader);
-        final ResolvedAssessmentItem resolvedAssessmentItem = resolver.resolveAssessmentItem(assessmentItem);
-        final AssessmentObjectValidator validator = new AssessmentObjectValidator(jqtiExtensionManager);
-        final ItemValidationResult validationResult = validator.validateItem(resolvedAssessmentItem);
+//        final QtiXmlReader qtiXmlReader = new QtiXmlReader(jqtiExtensionManager);
+//        final QtiObjectReader qtiObjectReader = qtiXmlReader.createQtiObjectReader(NullResourceLocator.getInstance(), false);
+//        final AssessmentObjectResolver resolver = new AssessmentObjectResolver(qtiObjectReader);
+//        final ResolvedAssessmentItem resolvedAssessmentItem = resolver.resolveAssessmentItem(assessmentItem);
+//        final AssessmentObjectValidator validator = new AssessmentObjectValidator(jqtiExtensionManager);
+//        final ItemValidationResult validationResult = validator.validateItem(resolvedAssessmentItem);
 
-        /* Print out validation result */
-        System.out.println("Validation result:");
-        ObjectDumper.dumpObjectToStdout(validationResult);
+//        /* Print out validation result */
+//        System.out.println("Validation result:");
+//        ObjectDumper.dumpObjectToStdout(validationResult);
 
         /* Finally serialize the assessmentItem to XML and print it out */
         final QtiSerializer qtiSerializer = new QtiSerializer(jqtiExtensionManager);

@@ -35,8 +35,11 @@ package uk.ac.ed.ph.jqtiplus.node.item.interaction.content;
 
 import uk.ac.ed.ph.jqtiplus.attribute.value.BooleanAttribute;
 import uk.ac.ed.ph.jqtiplus.node.QtiNode;
+import uk.ac.ed.ph.jqtiplus.node.content.basic.Flow;
 import uk.ac.ed.ph.jqtiplus.node.content.basic.InlineStatic;
 import uk.ac.ed.ph.jqtiplus.node.item.interaction.choice.AssociableChoice;
+
+import java.net.URI;
 
 /**
  * gap is an inlineStatic element that must only appear within a
@@ -47,7 +50,7 @@ import uk.ac.ed.ph.jqtiplus.node.item.interaction.choice.AssociableChoice;
  *
  * @author Jonathon Hare
  */
-public final class Gap extends AssociableChoice implements InlineStatic {
+public final class Gap extends AssociableChoice implements InlineStatic, Flow {
 
     private static final long serialVersionUID = 8587068031186931243L;
 
@@ -84,5 +87,15 @@ public final class Gap extends AssociableChoice implements InlineStatic {
      */
     public boolean getRequired() {
         return getAttributes().getBooleanAttribute(ATTR_REQUIRED_NAME).getComputedNonNullValue();
+    }
+
+    @Override
+    public URI getBaseUri() {
+        return null;
+    }
+
+    @Override
+    public void setBaseUri(URI base) {
+
     }
 }

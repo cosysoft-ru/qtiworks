@@ -84,7 +84,7 @@ public final class LoadModifyAndSaveQtiExample {
          * pseudo-URI.
          */
         final ResourceLocator inputResourceLocator = new ClassPathResourceLocator();
-        final URI inputUri = URI.create("classpath:/minimal.xml");
+        final URI inputUri = URI.create("classpath:/qti_q_phys_10_10_1_1.xml");
 
         /* Load the QTI XML, perform schema validation, and build a JQTI+ Object model from it,
          * expecting an AssessmentItem.
@@ -95,7 +95,7 @@ public final class LoadModifyAndSaveQtiExample {
         QtiObjectReadResult<AssessmentItem> readResult;
         try {
             readResult = simpleJqtiFacade.readQtiRootNode(inputResourceLocator, inputUri,
-                    true, /* = perform schema validation */
+                    false, /* = perform schema validation */
                     AssessmentItem.class);
         }
         catch (final XmlResourceNotFoundException e) {

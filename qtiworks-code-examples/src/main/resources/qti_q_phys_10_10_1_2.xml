@@ -1,0 +1,56 @@
+<assessmentItem
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"
+        xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd"
+        identifier="peace_10_10_1"
+        title="Принадлежности к урокам (assessmentItem title)"
+        data-type="tutor"><!-- Возможно два типа заданий quiz - тестовый вопрос, и tutor - тренажёр -->
+    <responseDeclaration identifier="RESPONSE1" cardinality="multiple" baseType="directedPair"><!--  Ответы. Тип ответа: directedPair - "прямое соответствие или пара"    -->
+        <!-- Возможные типы ответов:
+        directedPair - "прямое соответствие или пара";
+        identifier - "идентификатор";
+        integer - целое число;
+        string - строка;
+        float - число с плавающей точкой.
+        -->
+        <correctResponse><!-- Правильные соответствия -->
+            <value>G1 B</value>
+            <value>G1 C</value>
+            <value>G1 E</value>
+            <value>G1 F</value>
+            <value>G2 A</value>
+            <value>G2 D</value>
+        </correctResponse>
+    </responseDeclaration>
+    <itemBody><!-- Тело вопроса -->
+        <div class="question-section" data-type="gap-match-table"><!-- Тип вопроса: "Распределение элементов по категориям (расстановка фраз по ячейкам таблицы)", тип вопроса по QMS QTI: gapMatchInteraction. Данный тег div с параметрами - обязательный  -->
+            <div class="question-text"><!-- Текст содержащий вопрос, должен обязательно присутствовать -->
+                Поместите в левую колонку таблицы предметы, которые необходимы для урока Рисования, а в правую - предметы для урока Физкультуры
+            </div>
+            <gapMatchInteraction responseIdentifier="RESPONSE1" shuffle="false">
+                <gapText identifier="A" matchMax="1">Кроссовки</gapText><!-- Текст, который предстоит перетаскивать, идентификатор подставляется в правильные соответствия, matchMax = 1 означает, что фразу можно подставить только в одну ячейку таблицы, но в РЭШ этот функционал пока не реализован -->
+                <gapText identifier="B" matchMax="1">Кисточки</gapText>
+                <gapText identifier="C" matchMax="1">Краски</gapText>
+                <gapText identifier="D" matchMax="1">Спортивный костюм</gapText>
+                <gapText identifier="E" matchMax="1">Альбом</gapText>
+                <gapText identifier="F" matchMax="1">Карандаш</gapText>
+                <blockquote>
+                    <table><!-- Задаётся таблица, в которую предстоит перетаскивать фразы -->
+                        <thead>
+                            <tr>
+                                <th>Предметы для урока Рисования</th>
+                                <th>Предметы для урока Физкультуры</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><gap identifier="G1"/></td><!-- Целевая ячейка таблицы помечается тегом gap с идентификатором, идентификатор заносится в "Правильные соответствия" correctResponse -->
+                                <td><gap identifier="G2"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </blockquote>
+            </gapMatchInteraction>
+        </div>
+    </itemBody>
+</assessmentItem>
